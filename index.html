@@ -1,41 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SBH Strategy Calculator</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SBH BTC Strategy Calculator</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 2rem; }
+    body { font-family: Arial, sans-serif; padding: 2rem; max-width: 700px; margin: auto; }
     label, input { display: block; margin-top: 1rem; }
-    button { margin-top: 2rem; padding: 0.5rem 1rem; }
+    input { padding: 0.4rem; width: 100%; }
+    button { margin-top: 2rem; padding: 0.6rem 1rem; }
     .result { margin-top: 2rem; border-top: 1px solid #ccc; padding-top: 1rem; }
-    table { margin-top: 1rem; border-collapse: collapse; width: 100%; }
+    table { margin-top: 1rem; width: 100%; border-collapse: collapse; }
     th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
   </style>
 </head>
 <body>
-  <h1>Supply-Borrow-Hedge (SBH) Strategy Calculator</h1>
-  <form id="sbhForm">
+  <h1>Prediksi Strategi SBH BTC vs USDC</h1>
+  <form id="btcForm">
     <label for="capital">Modal Awal (USD):</label>
-    <input type="number" id="capital" required>
+    <input type="number" id="capital" required />
 
-    <label for="supplyRate">APR Supply (%):</label>
-    <input type="number" step="0.01" id="supplyRate" required>
+    <label for="btcPriceNow">Harga BTC Saat Ini (USD):</label>
+    <input type="number" id="btcPriceNow" required />
 
-    <label for="borrowRate">APR Borrow (%):</label>
-    <input type="number" step="0.01" id="borrowRate" required>
+    <label for="btcPriceFuture">Prediksi Harga BTC (USD):</label>
+    <input type="number" id="btcPriceFuture" required />
 
-    <label for="healthRatio">Minimal Health Ratio (HR):</label>
-    <input type="number" step="0.01" id="healthRatio" value="1.55" required>
+    <label for="supplyApr">APR Supply BTC (%):</label>
+    <input type="number" step="0.01" id="supplyApr" required />
 
-    <label for="targetProfit">Target Profit Bulanan (%):</label>
-    <input type="number" step="0.01" id="targetProfit">
+    <label for="borrowApr">APR Borrow USDC (%):</label>
+    <input type="number" step="0.01" id="borrowApr" required />
 
-    <button type="submit">Hitung Strategi</button>
+    <label for="lpApr">APR LP Farming dari USDC (%):</label>
+    <input type="number" step="0.01" id="lpApr" />
+
+    <button type="submit">Hitung Simulasi</button>
   </form>
-
   <div class="result" id="result"></div>
-
   <script src="script.js"></script>
 </body>
 </html>

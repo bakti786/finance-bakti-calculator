@@ -1,36 +1,36 @@
-// script.js
-
-document.getElementById('sbhForm').addEventListener('submit', function(e) {
+document.getElementById('btcForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
   const capital = parseFloat(document.getElementById('capital').value);
-  const supplyRate = parseFloat(document.getElementById('supplyRate').value) / 100;
-  const borrowRate = parseFloat(document.getElementById('borrowRate').value) / 100;
-  const healthRatio = parseFloat(document.getElementById('healthRatio').value);
-  const targetProfit = parseFloat(document.getElementById('targetProfit').value) / 100 || 0;
+  const priceNow = parseFloat(document.getElementById('btcPriceNow').value);
+  const priceFuture = parseFloat(document.getElementById('btcPriceFuture').value);
+  const supplyApr = parseFloat(document.getElementById('supplyApr').value) / 100;
+  const borrowApr = parseFloat(document.getElementById('borrowApr').value) / 100;
+  const lpApr = parseFloat(document.getElementById('lpApr').value) / 100 || 0;
 
-  const maxBorrow = capital / healthRatio;
-  const totalSupplied = capital + maxBorrow;
-  const hedgeReserve = capital;
+  const supplyAmount = (2 / 3) * capital;
+  const borrowAmount = (1 / 3) * capital;
 
-  const monthlySupplyYield = (totalSupplied * supplyRate) / 12;
-  const monthlyBorrowCost = (maxBorrow * borrowRate) / 12;
-  const monthlyNetProfit = monthlySupplyYield - monthlyBorrowCost;
+  const supplyYield = (supplyAmount * supplyApr) / 12;
+  const borrowCost = (borrowAmount * borrowApr) / 12;
+  const lpYield = (borrowAmount * lpApr) / 12;
 
-  const meetsTarget = targetProfit ? (monthlyNetProfit >= capital * targetProfit) : null;
+  const btcGain = ((priceFuture - priceNow) / priceNow) * supplyAmount;
 
-  const resultDiv = document.getElementById('result');
-  resultDiv.innerHTML = `
+  const netProfit = supplyYield + lpYield - borrowCost + btcGain;
+
+  document.getElementById('result').innerHTML = `
     <h2>Hasil Simulasi</h2>
     <table>
-      <tr><th>Total Supply</th><td>$${totalSupplied.toFixed(2)}</td></tr>
-      <tr><th>Max Borrow (HR ${healthRatio})</th><td>$${maxBorrow.toFixed(2)}</td></tr>
-      <tr><th>Cadangan Hedge</th><td>$${hedgeReserve.toFixed(2)}</td></tr>
-      <tr><th>Yield Supply / bulan</th><td>$${monthlySupplyYield.toFixed(2)}</td></tr>
-      <tr><th>Biaya Borrow / bulan</th><td>$${monthlyBorrowCost.toFixed(2)}</td></tr>
-      <tr><th>Net Profit / bulan</th><td>$${monthlyNetProfit.toFixed(2)}</td></tr>
-      ${targetProfit ? `<tr><th>Penuhi Target Profit?</th><td>${meetsTarget ? '✅ Ya' : '❌ Tidak'}</td></tr>` : ''}
+      <tr><th>Total Modal</th><td>$${capital.toFixed(2)}</td></tr>
+      <tr><th>Supply BTC (2/3)</th><td>$${supplyAmount.toFixed(2)}</td></tr>
+      <tr><th>Borrow USDC (1/3)</th><td>$${borrowAmount.toFixed(2)}</td></tr>
+      <tr><th>Yield Supply / bulan</th><td>$${supplyYield.toFixed(2)}</td></tr>
+      <tr><th>Yield LP Farming / bulan</th><td>$${lpYield.toFixed(2)}</td></tr>
+      <tr><th>Biaya Pinjam / bulan</th><td>$${borrowCost.toFixed(2)}</td></tr>
+      <tr><th>Keuntungan dari Naiknya BTC</th><td>$${btcGain.toFixed(2)}</td></tr>
+      <tr><th><strong>Net Profit (1 bulan)</strong></th><td><strong>$${netProfit.toFixed(2)}</strong></td></tr>
     </table>
-    <p style="margin-top:1rem;font-style:italic;color:gray;">Catatan: Ini simulasi sederhana. Tidak memperhitungkan reward tambahan dari LP, fluktuasi harga token, atau likuidasi darurat.</p>
+    <p style="font-style:italic;color:gray;">Simulasi ini mengasumsikan harga BTC naik sesuai prediksi. Risiko pasar dan likuidasi tidak diperhitungkan.</p>
   `;
 });
