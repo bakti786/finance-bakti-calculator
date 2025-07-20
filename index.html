@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SBH Strategy Calculator</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; }
+    label, input { display: block; margin-top: 1rem; }
+    button { margin-top: 2rem; padding: 0.5rem 1rem; }
+    .result { margin-top: 2rem; border-top: 1px solid #ccc; padding-top: 1rem; }
+    table { margin-top: 1rem; border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+  </style>
+</head>
+<body>
+  <h1>Supply-Borrow-Hedge (SBH) Strategy Calculator</h1>
+  <form id="sbhForm">
+    <label for="capital">Modal Awal (USD):</label>
+    <input type="number" id="capital" required>
+
+    <label for="supplyRate">APR Supply (%):</label>
+    <input type="number" step="0.01" id="supplyRate" required>
+
+    <label for="borrowRate">APR Borrow (%):</label>
+    <input type="number" step="0.01" id="borrowRate" required>
+
+    <label for="healthRatio">Minimal Health Ratio (HR):</label>
+    <input type="number" step="0.01" id="healthRatio" value="1.55" required>
+
+    <label for="targetProfit">Target Profit Bulanan (%):</label>
+    <input type="number" step="0.01" id="targetProfit">
+
+    <button type="submit">Hitung Strategi</button>
+  </form>
+
+  <div class="result" id="result"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
